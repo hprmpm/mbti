@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI診断選択くん</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js" type="module" defer></script>
+</head>
+
+<body>
+    <div x-data="{ count: 0, text: 'こんにちは'}">
+        <button x-on:click="count += 1">増やす</button>
+        <p x-text="count"></p>
+        <p x-show="count > 10">[show] 10より大きい</p>
+        <template x-if="count > 10">
+            <p>[if] 10より大きい</p>
+        </template>
+    </div>
+
+    <div id="app">
+        <template id="item-template">
+            <div class="card mbti-option">
+                <p class="name">タイトル</p>
+            </div>
+        </template>
+        <template id="result-template">
+            <div class="card mbti-result">
+                <p class="name">タイトル</p>
+                <div class="percentage"></div>
+                <p class="count-row">
+                    <span class="count">1</span>
+                    <span>/</span>
+                    <span class="total">5</span>
+                </p>
+            </div>
+        </template>
+        <div id="select-section">
+            <h2 class="page-title">あなたの性格タイプは？</h2>
+            <div id="select-view" class="grid"></div>
+        </div>
+        <div id="result-section" style="display:none;">
+            <h2 class="page-title">集計結果</h2>
+            <div id="result-view" class="grid"></div>
+        </div>
+    </div>
+</body>
+
+</html>
