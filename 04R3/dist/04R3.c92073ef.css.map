@@ -1,0 +1,1 @@
+{"mappings":"AAAA;;;;AAIA;;;;;AAKA","sources":["src/css/style.css"],"sourcesContent":[".list-item {\n    padding: 2rem;\n}\n\n.red {\n    color: red;\n    font-size: 1.5rem;\n}\n\n.bar {\n    width: 100%;\n    height: 2rem;\n    background-color: #ff0f00;\n    border-radius: 4px;\n}\n"],"names":[],"version":3,"file":"04R3.c92073ef.css.map","sourceRoot":"/__parcel_source_root/"}
