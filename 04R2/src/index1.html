@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI診断選択くん</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js" type="module" defer></script>
+</head>
+<body>
+
+    <p id="message"></p>
+
+    <div id="app" x-data="{
+        baseURL: 'https://1b01-125-103-213-138.ngrok-free.app',
+        userId: '00',
+        totalCount: 0,
+        types: [],
+        clicked: false,
+        onClick: function (params) {
+            if (this.clicked) {
+                return;
+            }
+            this.vote(params);
+            this.clicked = true;
+        },
+        es: null,
+        sse: function() {
+            this.es = new EventSource(`${this.baseURL}/sse`);
+            this.es.addEventListener('message', (event) => {
+                const data = JSON.parse(event.data);
+                this.types = data.types;
+                console.log(data);
+                this.totalCount = data.types.reduce((total, type) => total + type.users.length, 0)
+            })
+        },
+        vote: function (params) {
+            fetch(`${this.baseURL}/vote?userId=${this.userId}&type=${params}`)
+        },
+    }"
+    x-init="sse()"
+    >
+        <header class="header">
+            <h1>あなたの性格タイプは？</h1>
+        </header>
+        <ul id="list" class="grid">
+            <template x-for="type in types">
+                <li class="list-item" @click="onClick(type.name)">
+                    <p class="name" x-text="type.name"></p>
+                    <p class="count-wrapper" x-show="clicked">
+                        <span class="count" x-html="type.users.length"></span>
+                        <span>/</span>
+                        <span class="total" x-text="totalCount"></span>
+                    </p>
+                    <p x-text="type.users.join(', ')"></p>
+                </li>
+            </template>
+        </ul>
+
+    </div>
+</body>
+</html>
